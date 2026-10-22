@@ -3,41 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DOOH Display - Sudirman 01</title>
+    <title>DOOH Display Player - Sudirman 01</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body, html { width: 100%; height: 100%; background-color: #000; color: #fff; font-family: Arial, sans-serif; overflow: hidden; }
-        .container { width: 100vw; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; border: 4px solid #00E676; padding: 20px; }
-        h1 { font-size: 4vw; color: #00E676; margin-bottom: 10px; }
-        p { font-size: 2vw; color: #ccc; margin-bottom: 20px; }
-        .timer-box { font-size: 1.5vw; background: #111; padding: 10px 20px; border-radius: 8px; border: 1px solid #333; }
-        .highlight { color: #FFD700; font-weight: bold; }
+        body, html { width: 100%; height: 100%; background-color: #000; overflow: hidden; font-family: sans-serif; }
+        
+        /* Video Container Fullscreen */
+        .video-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #000;
+        }
+
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Memastikan video memenuhi layar tanpa border hitam */
+        }
+
+        /* Overlay Info Status (Muncul Kecil di Pojok) */
+        .status-overlay {
+            position: absolute;
+            bottom: 12px;
+            left: 12px;
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid #00E676;
+            color: #00E676;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-family: monospace;
+            z-index: 100;
+        }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>⚡ UNPLUG DOOH PLAYER</h1>
-        <p>Client: <span class="highlight">Brand Kopi</span> | Site: <span class="highlight">Sudirman-01</span></p>
-        
-        <div class="timer-box">
-            Status Layar: <span style="color:#00E676;">PLAYING</span> | Sisa Slot: <span id="timer" class="highlight">15</span> dtk
-        </div>
+    <div class="video-container">
+        <!-- Player Video MP4 Autoplay & Looping -->
+        <video id="doohVideo" autoplay loop muted playsinline>
+            <source src="./assets/promo.mp4" type="video/mp4">
+            Browser Anda tidak mendukung pemutaran video HTML5.
+        </video>
+    </div>
+
+    <!-- Overlay Info untuk Testing -->
+    <div class="status-overlay">
+        ⚡ UNPLUG PLAYER | 🟢 LIVE: promo.mp4
     </div>
 
     <script>
-        // Simulasi Timer Slot 15 Detik
-        let timeLeft = 15;
-        const timerElem = document.getElementById('timer');
+        const video = document.getElementById('doohVideo');
 
-        setInterval(() => {
-            timeLeft--;
-            if (timeLeft < 0) {
-                timeLeft = 15; // Looping slot baru
-                console.log("[PoP Log] Slot 15 detik selesai diputar.");
-            }
-            timerElem.textContent = timeLeft;
-        }, 1000);
+        // Memastikan Autoplay Berjalan (Bypass Browser Restriction)
+        window.addEventListener('DOMContentLoaded', () => {
+            video.play().catch(error => {
+                console.log("Autoplay dicegah browser, mencoba memutar ulang secara muted...", error);
+                video.muted = true;
+                video.play();
+            });
+        });
+
+        // Log Simulasi Proof of Play (Setiap Video Selesai 1 Putaran)
+        video.addEventListener('ended', () => {
+            console.log(`[PoP Log ${new Date().toISOString()}] Video promo.mp4 selesai diputar 1 loop.`);
+        });
     </script>
 </body>
 </html>
