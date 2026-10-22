@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOOH Display - Sudirman 01</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body, html { width: 100%; height: 100%; background-color: #000; color: #fff; font-family: Arial, sans-serif; overflow: hidden; }
+        .container { width: 100vw; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; border: 4px solid #00E676; padding: 20px; }
+        h1 { font-size: 4vw; color: #00E676; margin-bottom: 10px; }
+        p { font-size: 2vw; color: #ccc; margin-bottom: 20px; }
+        .timer-box { font-size: 1.5vw; background: #111; padding: 10px 20px; border-radius: 8px; border: 1px solid #333; }
+        .highlight { color: #FFD700; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>⚡ UNPLUG DOOH PLAYER</h1>
+        <p>Client: <span class="highlight">Brand Kopi</span> | Site: <span class="highlight">Sudirman-01</span></p>
+        
+        <div class="timer-box">
+            Status Layar: <span style="color:#00E676;">PLAYING</span> | Sisa Slot: <span id="timer" class="highlight">15</span> dtk
+        </div>
+    </div>
+
+    <script>
+        // Simulasi Timer Slot 15 Detik
+        let timeLeft = 15;
+        const timerElem = document.getElementById('timer');
+
+        setInterval(() => {
+            timeLeft--;
+            if (timeLeft < 0) {
+                timeLeft = 15; // Looping slot baru
+                console.log("[PoP Log] Slot 15 detik selesai diputar.");
+            }
+            timerElem.textContent = timeLeft;
+        }, 1000);
+    </script>
+</body>
+</html>
